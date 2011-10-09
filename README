@@ -1,0 +1,3 @@
+Very small WPF App that enumerates all available SSIDs and displays them with the signal strength in a list.
+
+Uses the managed wifi api from: http://managedwifi.codeplex.com
