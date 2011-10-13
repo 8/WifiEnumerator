@@ -36,15 +36,19 @@ namespace WifiEnumerator
     {
       this.SSIDViewModels.Clear();
 
-      var client = new WlanClient();
-      foreach (WlanClient.WlanInterface wlanIface in client.Interfaces)
+      try
       {
-        Wlan.WlanAvailableNetwork[] networks = wlanIface.GetAvailableNetworkList(0);
-        foreach (Wlan.WlanAvailableNetwork network in networks)
+        var client = new WlanClient();
+        foreach (WlanClient.WlanInterface wlanIface in client.Interfaces)
         {
-          this.SSIDViewModels.Add(new SSIDViewModel() { SSID = network.dot11Ssid.ToText(), SignalStrength = (int)network.wlanSignalQuality});
+          Wlan.WlanAvailableNetwork[] networks = wlanIface.GetAvailableNetworkList(0);
+          foreach (Wlan.WlanAvailableNetwork network in networks)
+          {
+            this.SSIDViewModels.Add(new SSIDViewModel() { SSID = network.dot11Ssid.ToText(), SignalStrength = (int)network.wlanSignalQuality });
+          }
         }
       }
+      catch { }
     }
 
   }
