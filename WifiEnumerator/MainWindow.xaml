@@ -9,9 +9,15 @@
       <RowDefinition Height="Auto"/>
     </Grid.RowDefinitions>
     <v:SSIDListView DataContext="{Binding SSIDListViewModel, Source={StaticResource Locator}}" />
-    
-    <Button Grid.Row="1" HorizontalAlignment="Right" Padding="4,2,4,2" Margin="4,2,4,2" Content="Refresh" 
-            Command="{Binding SSIDListViewModel.RefreshCommand, Source={StaticResource Locator}}" />
-    
+
+
+    <StackPanel Grid.Row="1" Orientation="Horizontal" HorizontalAlignment="Right">
+
+      <v:RefreshView DataContext="{Binding RefreshViewModel, Source={StaticResource Locator}}" />
+      <Button Padding="4,2,4,2" Margin="4,2,4,2" Content="Refresh" 
+              Command="{Binding SSIDListViewModel.RefreshCommand, Source={StaticResource Locator}}" />
+
+    </StackPanel>
+
   </Grid>
 </Window>

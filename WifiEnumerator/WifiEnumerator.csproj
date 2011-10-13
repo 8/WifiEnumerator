@@ -55,11 +55,18 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="BasePropertyChanged.cs" />
     <Compile Include="Dot11SsidExtensions.cs" />
     <Compile Include="Locator.cs" />
     <Compile Include="RelayCommand.cs" />
-    <Compile Include="SSIDListViewModel.cs" />
-    <Compile Include="SSIDModel.cs" />
+    <Compile Include="SimplePeriodicTimer.cs" />
+    <Compile Include="ViewModel\RefreshViewModel.cs" />
+    <Compile Include="ViewModel\SSIDListViewModel.cs" />
+    <Compile Include="ViewModel\SSIDViewModel.cs" />
+    <Compile Include="SynchronisationContextObject.cs" />
+    <Compile Include="View\RefreshView.xaml.cs">
+      <DependentUpon>RefreshView.xaml</DependentUpon>
+    </Compile>
     <Compile Include="View\SSIDViewList.xaml.cs">
       <DependentUpon>SSIDViewList.xaml</DependentUpon>
     </Compile>
@@ -75,6 +82,10 @@
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Page Include="View\RefreshView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="View\SSIDViewList.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>

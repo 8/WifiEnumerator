@@ -8,7 +8,7 @@ using NativeWifi;
 
 namespace WifiEnumerator
 {
-  public class SSIDListViewModel
+  public class SSIDListViewModel : SynchronizationContextObject
   {
     public ObservableCollection<SSIDViewModel> SSIDViewModels { get; private set; }
 
@@ -32,10 +32,11 @@ namespace WifiEnumerator
       this.Refresh();
     }
 
-    public void Refresh()
-    {
-      this.SSIDViewModels.Clear();
+    #region Methods
 
+    private IEnumerable<SSIDViewModel> GetVMs()
+    {
+      var vms = new List<SSIDViewModel>();
       try
       {
         var client = new WlanClient();
@@ -43,13 +44,25 @@ namespace WifiEnumerator
         {
           Wlan.WlanAvailableNetwork[] networks = wlanIface.GetAvailableNetworkList(0);
           foreach (Wlan.WlanAvailableNetwork network in networks)
-          {
-            this.SSIDViewModels.Add(new SSIDViewModel() { SSID = network.dot11Ssid.ToText(), SignalStrength = (int)network.wlanSignalQuality });
-          }
+            vms.Add(new SSIDViewModel() { SSID = network.dot11Ssid.ToText(), SignalStrength = (int)network.wlanSignalQuality });
         }
       }
       catch { }
+      return vms;
     }
 
+    public void Refresh()
+    {
+      var vms = GetVMs();
+
+      this.Post(() =>
+        {
+          this.SSIDViewModels.Clear();
+          foreach (var vm in vms)
+            this.SSIDViewModels.Add(vm);
+        });
+    }
+
+    #endregion
   }
 }
